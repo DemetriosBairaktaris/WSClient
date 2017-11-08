@@ -1,0 +1,44 @@
+
+body{
+	--main-site-color:  #ff7f3f ;
+	background-color: #efefef ;
+}
+#site-title{
+
+	font-size: 2em ; 
+	font-family: 'Economica', sans-serif;
+}
+
+.on-purple-text {
+	color: white;
+}
+
+#nav-bar{
+
+	background-color: var(--main-site-color) ;  
+	box-shadow: 0px 2px 14px 4px rgba(0,0,0,0.21);
+}
+
+main{
+	margin-top: 10% ;
+}
+
+.pure-button.pure-button-primary{
+	background-color: var(--main-site-color); 
+}
+
+.center {
+	text-align: center;
+	margin-left: auto ;
+	margin-right: auto ; 
+}
+
+.island{
+	 box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
+  	background-color: white ;
+}
+
+footer{
+	bottom: 0;
+	position: absolute; 
+}
