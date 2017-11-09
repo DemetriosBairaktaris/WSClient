@@ -1,16 +1,25 @@
 
 body{
 	--main-site-color:  #ff7f3f ;
-	background-color: #efefef ;
+	//--main-site-color:  //#68a2ff ;
+  	background-color: #efefef ;  
+
 }
+
+.pure-button-inverted{
+	color: var(--main-site-color);
+	background-color: white ; 
+}
+
 #site-title{
 
 	font-size: 2em ; 
 	font-family: 'Economica', sans-serif;
 }
 
-.on-purple-text {
+.on-dark-text {
 	color: white;
+	
 }
 
 #nav-bar{
@@ -20,22 +29,26 @@ body{
 }
 
 main{
-	margin-top: 10% ;
+	margin-top: 5% ;
 }
 
 .pure-button.pure-button-primary{
 	background-color: var(--main-site-color); 
 }
 
+.island{
+	 box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
+  	background-color: white ;
+  	margin: 3px ;
+  	padding: 5px;
+  	border-radius: 4px; 
+
+}
+
 .center {
 	text-align: center;
 	margin-left: auto ;
 	margin-right: auto ; 
-}
-
-.island{
-	 box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
-  	background-color: white ;
 }
 
 footer{
