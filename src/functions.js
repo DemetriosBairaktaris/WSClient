@@ -88,13 +88,17 @@ function getRegisterHtml(){
  	$buttonGroup.children().on("click",function(){
  		$buttonGroup.children().removeClass("pure-button-active");
  		$(this).addClass("pure-button-active") ; 
- 		if(registerTypeIsCustomer()){
- 			$("main").empty();
- 			$("main").append(getCustomerSignUpForm());
+
+ 		$main = $("main") ; 
+ 		var isCustomerRegistration = registerTypeIsCustomer() ;
+ 		$main.empty(); 
+ 		if(isCustomerRegistration){
+ 			
+ 			$main.append(getCustomerSignUpForm());
  		} 
  		else{
- 			$("main").empty();
- 			$("main").append(getPartnerSignUpForm());
+ 			
+ 			$main.append(getPartnerSignUpForm());
  		}
  		applyRegisterLogic() ; //sudo-recursion, coooooool
  	}) ; 
