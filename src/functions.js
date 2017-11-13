@@ -45,7 +45,7 @@ function getRegisterHtml(){
 
  function getPartnerSignUpForm(){
   var html =  `
-	<div id="register-form"class="pure-form pure-u-4-5 center island">
+	<div id="register-form"class="pure-form pure-form-stacked pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Register Partner New Account</legend>
         			<div class= "pure-u-3-5">
