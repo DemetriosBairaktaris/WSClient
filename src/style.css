@@ -9,6 +9,9 @@ body{
 .pure-button-inverted{
 	color: var(--main-site-color);
 	background-color: white ; 
+	border-style: solid ; 
+	border-width: 1px;
+	border-color: var(--main-site-color);
 }
 
 #site-title{
@@ -37,12 +40,11 @@ main{
 }
 
 .island{
-	 box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
+	box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
   	background-color: white ;
   	margin: 3px ;
   	padding: 5px;
   	border-radius: 4px; 
-
 }
 
 .center {
