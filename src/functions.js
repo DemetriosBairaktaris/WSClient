@@ -10,7 +10,7 @@ function getRegisterHtml(){
  	var html =  `
 	<div id="register-form"class="pure-form pure-u-4-5 center island">
     			<fieldset>
-        		<legend class="main-color-header">Register Customer New Account</legend>
+        		<legend class="main-color-header">Register New Customer Account</legend>
         			<div class= "pure-u-3-5">
         			 <input type="email" placeholder="Email">
        				 <input type="password" placeholder="Password">
@@ -47,7 +47,7 @@ function getRegisterHtml(){
   var html =  `
 	<div id="register-form"class="pure-form pure-form-stacked pure-u-4-5 center island">
     			<fieldset>
-        		<legend class="main-color-header">Register Partner New Account</legend>
+        		<legend class="main-color-header">Register New Partner Account</legend>
         			<div class= "pure-u-3-5">
         			 <input type="email" placeholder="Email" >
        				 <input type="password" placeholder="Password" >
