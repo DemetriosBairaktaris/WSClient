@@ -1,13 +1,17 @@
 
 
 :root{
-	--main-site-color:  #68a2ff ;
+	--main-site-color: #0AF;
 }
 body{
 	
   	background-color: #efefef ;  
 
 }
+body{
+	font-family: "Ariel", sans-serif;
+}
+
 
 .pure-button.pure-button-primary,
 .pure-button {
@@ -31,6 +35,10 @@ body{
 	border-width: 1px;
 }
 
+a{
+	color: var(--main-site-color);
+	cursor: pointer; 
+}
 
 #site-title{
 
@@ -79,8 +87,29 @@ main{
 	margin-right: auto !important; 
 }
 
+.success-message{
+	background-color: #6A6 ; 
+	border-radius: 0; 
+	
+}
+.success-message p{
+	text-decoration: bold ;
+	color: #FFF;
+}
+
+.failure-message{
+	background-color: #d33b3b; 
+	border-radius: 0; 
+	
+}
+
+.failure-message p{
+	text-decoration: bold ;
+	color: #FFF;
+}
 
 footer{
 	bottom: 0 ;
+
 	
 }

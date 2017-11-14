@@ -1,30 +1,50 @@
+var hostName = "http:localhost:8081";
 
+function getRegisterHtml() {
 
-function getRegisterHtml(){
-	
-			var html = getCustomerSignUpForm() ; 
-			return html ; 
- }
+    var html = getCustomerSignUpForm();
+    return html;
+}
 
- function getCustomerSignUpForm(){
- 	var html =  `
-	<div id="register-form"class="pure-form pure-u-4-5 center island">
+function getSuccessMsg(msg){
+
+	var html = `
+		<div class="pure-u-4-5 island message success-message center ">	
+			<p>Success: ` + msg + `</p>
+		</div>
+	` ; 
+	return html ;
+}
+
+function getFailureMsg(msg){
+
+	var html = `
+		<div class="pure-u-4-5 island message failure-message center ">	
+			<p>Failure: ` + msg + `</p>
+		</div>
+	` ; 
+	return html ;
+}
+
+function getCustomerSignUpForm() {
+    var html = `
+	<div id="register-form" class="pure-form pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Register New Customer Account</legend>
         			<div class= "pure-u-3-5">
-        			 <input type="email" placeholder="Email">
-       				 <input type="password" placeholder="Password">
-       				 <input type="text" placeholder="First Name">
-       				 <input type="text" placeholder="Last Name">
-       				 <input type="text" placeholder="Address">
-       				 <input type="text" placeholder="Phone">
+        			 <input id = "userName" type="email" placeholder="Email">
+       				 <!--<input type="password" placeholder="Password" >-->
+       				 <input id = "firstName" type="text" placeholder="First Name">
+       				 <input id = "lastName" type="text" placeholder="Last Name">
+       				 <input id = "address" type="text" placeholder="Address">
+       				 <input id = "phone" type="text" placeholder="Phone">
        				
        				
        				 
-       				 	 <input type="text" placeholder="Credit Card #">
-	       				 <input type="text" placeholder="Credit Card Type">
-	       				 <input type="text" placeholder="CVV">
-	       				 <input type="date" placeholder="Expiration">
+       				 	 <input id="cardNumber" type="text" placeholder="Credit Card #">
+	       				 <input id="cardName" type="text" placeholder="Credit Card Type">
+	       				 <input id="cvv" type="text" placeholder="CVV">
+	       				 <input id="expiration" type="date" placeholder="Expiration">
        				 </div>
 
        				 </fieldset>
@@ -36,25 +56,25 @@ function getRegisterHtml(){
 					 <h6>Register as customer or partner</h6>
 					<div class="pure-u-2-5">
 						<button id="register-submit-button" type="submit" class="pure-button pure-button-inverted">Register</button>
+						<a onclick="location.reload()">Sign In</a>
 					</div>
 					
     			
 			</div> `
-			return html ; 
- }
+    return html;
+}
 
- function getPartnerSignUpForm(){
-  var html =  `
+function getPartnerSignUpForm() {
+    var html = `
 	<div id="register-form"class="pure-form pure-form-stacked pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Register New Partner Account</legend>
         			<div class= "pure-u-3-5">
-        			 <input type="email" placeholder="Email" >
-       				 <input type="password" placeholder="Password" >
-       				 <input type="text" placeholder="Company Name" >
-       				 <input type="text" placeholder="Address" >
-       				 <input type="text" placeholder="Phone" >
-       				 
+        			 <input id = "userName" type="email" placeholder="Email" required>
+       				 <!--<input type="password" placeholder="Password" >-->
+       				 <input  id = "name" type="text" placeholder="Company Name" required >
+       				 <input  id = "address" type="text" placeholder="Address" required >
+       				 <input  id = "phone" type="text" placeholder="Phone" required>
        				 </div>
 
        				 </fieldset>
@@ -66,49 +86,126 @@ function getRegisterHtml(){
 					 <h6>Register as customer or partner</h6>
 					<div class="pure-u-2-5">
 						<button id="register-submit-button" type="submit" class="pure-button pure-button-inverted">Register</button>
+						<a onclick="location.reload()">Sign In</a>
 					</div>
     			
 			</div> `
-			return html ; 
- }
+    return html;
+}
 
- function registerTypeIsCustomer(){
- 	var $button = $(".pure-button-active") ; 
- 	if ($button.attr("id") == 'customer-button'){
- 		return true ; 
- 	}
- 	else{
- 		return false ; 
- 	}
- }
+function registerTypeIsCustomer() {
+    var $button = $(".pure-button-active");
+    if ($button.attr("id") == 'customer-button') {
+        return true;
+    } else {
+        return false;
+    }
+}
 
- function applyRegisterLogic(){
- 	
- 	$buttonGroup = $("#register-form .pure-button-group") ;  
- 	$buttonGroup.children().on("click",function(){
- 		$buttonGroup.children().removeClass("pure-button-active");
- 		$(this).addClass("pure-button-active") ; 
+function applyRegisterLogic() {
 
- 		$main = $("main") ; 
- 		var isCustomerRegistration = registerTypeIsCustomer() ;
- 		$main.empty(); 
- 		if(isCustomerRegistration){
- 			
- 			$main.append(getCustomerSignUpForm());
- 		} 
- 		else{
- 			
- 			$main.append(getPartnerSignUpForm());
- 		}
- 		applyRegisterLogic() ; //sudo-recursion, coooooool
- 	}) ; 
+    $buttonGroup = $("#register-form .pure-button-group");
+    $buttonGroup.children()
+        .on("click", function() {
+            $buttonGroup.children()
+                .removeClass("pure-button-active");
+            $(this)
+                .addClass("pure-button-active");
 
- 	$("#register-submit-button").on("click",function(){
- 		alert("TODO: call to api to register user, user type is customer: " + registerTypeIsCustomer());
+            $main = $("main");
+            var isCustomerRegistration = registerTypeIsCustomer();
+            $main.empty();
+            if (isCustomerRegistration) {
 
- 	});
- }
+                $main.append(getCustomerSignUpForm());
+            } else {
 
- function applySignInLogic(){
+                $main.append(getPartnerSignUpForm());
+            }
+            applyRegisterLogic(); //psudo-recursion, coooooool
+        });
 
- }
+    $("#register-submit-button")
+        .on("click", function() {
+        	$(".message").remove() ; 
+            if (registerTypeIsCustomer()) {
+                handleCustomerRegister();
+            } else {
+                handlePartnerRegister();
+            }
+        });
+}
+
+
+function collectFromForm(objectName) {
+    var data = {}
+    data[objectName] = {}
+    var $inputs = $("#register-form * input");
+    console.log($inputs);
+    for (var i = 0; i < $inputs.length; i++) {
+        data[objectName][$inputs[i].id] = $($inputs[i])
+            .val();
+    }
+    return JSON.stringify(data);
+};
+
+function handleCustomerRegister() {
+	var url = hostName + "/customers";
+    var dataType = "json";
+    var verb = "POST";
+    var contentType = "application/json";
+    var accepts = "application/json";
+     $.ajax({
+        accepts: accepts,
+        contentType: contentType,
+        type: verb,
+        url: url,
+        data: collectFromForm("Customer"),
+        success: function(data) {
+        	console.log(data) ; 
+            registerSuccess(data.Customer.userName + " has been created") ; 
+        },
+        error: function(data) {
+        	console.log("heer") ; 
+            registerFailure("Could not create customer");
+        },
+        dataType: dataType
+    });
+
+};
+
+function handlePartnerRegister() {
+
+    var url = hostName + "/partners";
+    var dataType = "json";
+    var verb = "POST";
+    var contentType = "application/json";
+    var accepts = "application/json";
+    $.ajax({
+        accepts: accepts,
+        contentType: contentType,
+        type: verb,
+        url: url,
+        data: collectFromForm("Partner"),
+        success: function(data) {
+            registerSuccess( data.Partner.userName + " has been created");
+        },
+        error: function(data) {
+            registerFailure( "Could not create Partner");
+        },
+        dataType: dataType
+    });
+};
+
+function registerSuccess(msg){
+	var $main = $("main") ;
+	$main.prepend(getSuccessMsg(msg)) ; 
+};
+function registerFailure(msg){
+	var $main = $("main") ;
+	$main.prepend(getFailureMsg(msg)) ; 
+}; 
+
+function applySignInLogic() {
+
+}
