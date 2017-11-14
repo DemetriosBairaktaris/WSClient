@@ -1,4 +1,4 @@
-var hostName = "http:localhost:8081";
+var hostName = "http://localhost:8081";
 
 function getRegisterHtml() {
 
@@ -141,35 +141,46 @@ function collectFromForm(objectName) {
     var data = {}
     data[objectName] = {}
     var $inputs = $("#register-form * input");
-    console.log($inputs);
     for (var i = 0; i < $inputs.length; i++) {
-        data[objectName][$inputs[i].id] = $($inputs[i])
-            .val();
+        data[objectName][$inputs[i].id] = String($($inputs[i])
+            .val());
+        console.log(JSON.stringify(data[objectName]));
     }
     return JSON.stringify(data);
 };
 
 function handleCustomerRegister() {
-	var url = hostName + "/customers";
+	var url = hostName + "/customers/";
     var dataType = "json";
     var verb = "POST";
     var contentType = "application/json";
     var accepts = "application/json";
+
      $.ajax({
+     	jsonp: false,
+     	dataType: dataType,
         accepts: accepts,
         contentType: contentType,
         type: verb,
         url: url,
         data: collectFromForm("Customer"),
         success: function(data) {
-        	console.log(data) ; 
+        	console.log(data) ;
             registerSuccess(data.Customer.userName + " has been created") ; 
         },
-        error: function(data) {
-        	console.log("heer") ; 
-            registerFailure("Could not create customer");
-        },
-        dataType: dataType
+        error: function(data,status,err) {
+        	if(Number(data.status) < 300){
+        		registerSuccess("Customer has been created") ; 
+        		//ask me later
+        	}
+        	else{
+	        	console.log(data) ; 
+	        	console.log(status) ;
+	        	console.log(err) ; 
+	            registerFailure("Could not create customer");
+       		 }
+        }
+       
     });
 
 };

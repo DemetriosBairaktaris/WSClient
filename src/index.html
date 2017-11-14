@@ -27,7 +27,7 @@
 			
 			<!--MainContent Here-->
 
-			<form id="sign-in-form"class="pure-form pure-u-4-5 center island">
+			<div id="sign-in-form"class="pure-form pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Sign In</legend>
 
@@ -37,7 +37,7 @@
         			<button id = "sign-in-button" type="submit" class="pure-button pure-button-primary">Sign in</button>
         			<button id = "register-button" type="submit" class="pure-button pure-button-inverted">Register</button>
     			</fieldset>
-			</form>
+			</div>
 
 				
 			
@@ -53,9 +53,10 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+			console.log("Yeah") ; 
 			$main  = $("main") ; 
 	    	$("#register-button").click(function(){
-
+	    		console.log("yeah");
 	        	$("#sign-in-form").remove() ; 
 	        	var html =  getRegisterHtml() ; 
 	        	$main.hide() ; 
