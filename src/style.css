@@ -1,15 +1,15 @@
 
 
 :root{
-	--main-site-color: #0AF;
+	--main-site-color: #424e68;
 }
 body{
 	
-  	background-color: #efefef ;  
-
+  	background-color: #efefef ; 
 }
-body{
-	font-family: "Ariel", sans-serif;
+body text,
+body *{
+	font-family: "Arial", sans-serif;
 }
 
 
@@ -44,6 +44,7 @@ a{
 
 	font-size: 2em ; 
 	font-family: 'Economica', sans-serif;
+
 }
 
 .on-dark-text {
