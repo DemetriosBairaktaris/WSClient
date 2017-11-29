@@ -18,32 +18,32 @@
 
     					<a href="#" class="pure-menu-heading on-dark-text" id="site-title">Comp 433 WebClient</a>
     					<div id="current-user" class="pure-menu-item"></div>
-    				
+
 					</div>
 
 		</section>
 
-		
+
 
 		<main class='pure-g'>
-			
+
 			<!--MainContent Here-->
 
 			<div id="sign-in-form"class="pure-form pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Sign In</legend>
 
-        			 <input type="email" placeholder="Email">
-       				 <input type="password" placeholder="Password">
+        			 <input id="userName" type="email" placeholder="Email">
+       				 <input id="password" type="password" placeholder="Password">
 
         			<button id = "sign-in-button" type="submit" class="pure-button pure-button-primary">Sign in</button>
         			<button id = "register-button" type="submit" class="pure-button pure-button-inverted">Register</button>
     			</fieldset>
 			</div>
 
-				
-			
-			
+
+
+
 		</main>
 
 
@@ -58,21 +58,22 @@
 		currentUser = null ;
 
 		$(document).ready(function(){
-			console.log("Yeah") ; 
-			$main  = $("main") ; 
+			console.log("Yeah") ;
+			$main  = $("main") ;
+			applySignInLogic();
 	    	$("#register-button").click(function(){
 	    		console.log("yeah");
-	        	$("#sign-in-form").remove() ; 
-	        	var html =  getRegisterHtml() ; 
-	        	$main.hide() ; 
-	        	$main.append(html) ; 
+	        	$("#sign-in-form").remove() ;
+	        	var html =  getRegisterHtml() ;
+	        	$main.hide() ;
+	        	$main.append(html) ;
 	        	$main.fadeIn();
 	   			applyRegisterLogic() ;
 	    	});
 
-	    	
+
 		});
 	</script>
 
-	
+
 </html>

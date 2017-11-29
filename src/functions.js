@@ -8,7 +8,7 @@ function getRegisterHtml() {
 function getSuccessMsg( msg ) {
     var html =
         `
-        <div class="pure-u-4-5 island message success-message center "> 
+        <div class="pure-u-4-5 island message success-message center ">
             <p>Success: ` +
         msg + `</p>
         </div>
@@ -19,7 +19,7 @@ function getSuccessMsg( msg ) {
 function getFailureMsg( msg ) {
     var html =
         `
-        <div class="pure-u-4-5 island message failure-message center "> 
+        <div class="pure-u-4-5 island message failure-message center ">
             <p>Failure: ` +
         msg + `</p>
         </div>
@@ -40,9 +40,9 @@ function getCustomerSignUpForm() {
                      <input id = "lastName" type="text" placeholder="Last Name">
                      <input id = "address" type="text" placeholder="Address">
                      <input id = "phone" type="text" placeholder="Phone">
-                    
-                    
-                     
+
+
+
                          <input id="cardNumber" type="text" placeholder="Credit Card #">
                          <input id="cardName" type="text" placeholder="Credit Card Type">
                          <input id="cvv" type="text" placeholder="CVV">
@@ -60,8 +60,8 @@ function getCustomerSignUpForm() {
                         <button id="register-submit-button" type="submit" class="pure-button pure-button-inverted">Register</button>
                         <a onclick="location.reload()">Sign In</a>
                     </div>
-                    
-                
+
+
             </div> `
     return html;
 }
@@ -91,7 +91,7 @@ function getPartnerSignUpForm() {
                         <button id="register-submit-button" type="submit" class="pure-button pure-button-inverted">Register</button>
                         <a onclick="location.reload()">Sign In</a>
                     </div>
-                
+
             </div> `
     return html;
 }
@@ -143,6 +143,18 @@ function collectFromForm( objectName ) {
         data[ objectName ][ $inputs[ i ].id ] = String( $( $inputs[ i ] )
             .val() );
         console.log( JSON.stringify( data[ objectName ] ) );
+    }
+    return JSON.stringify( data );
+};
+
+function collectFromLogin() {
+    var data = {}
+    data[ "Login" ] = {}
+    var $inputs = $( "#sign-in-form * input" );
+    for ( var i = 0; i < $inputs.length; i++ ) {
+        data[ "Login" ][ $inputs[ i ].id ] = String( $( $inputs[ i ] )
+            .val() );
+        console.log( JSON.stringify( data[ "Login" ] ) );
     }
     return JSON.stringify( data );
 };
@@ -219,4 +231,40 @@ function registerFailure( msg ) {
     $main.prepend( getFailureMsg( msg ) );
 };
 
-function applySignInLogic() {}
+function loginFailure(msg) {
+  var $main = $("main");
+  $main.prepend(getFailureMsg(msg));
+}
+
+function applySignInLogic() {
+  $( "#sign-in-button" )
+      .on( "click", function() {
+        console.log("Button works.")
+        login();
+      }
+    );
+}
+
+function login() {
+  var url = hostName + "/login?key=123456789";
+  var dataType = "json";
+  var verb = "PUT";
+  var contentType = "application/luc.login+json";
+  var accepts = "application/luc.partners+json, application/luc.customers+json";
+  console.log("Logging in now...");
+  $.ajax( {
+      accepts: accepts,
+      contentType: contentType,
+      type: verb,
+      url: url,
+      data: collectFromLogin(),
+      success: function( data ) {
+          console.log( "Login successful" );
+          console.log( data );
+      },
+      error: function( data ) {
+          loginFailure( "Could not login..." );
+      },
+      dataType: dataType
+  } );
+}
