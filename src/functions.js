@@ -34,19 +34,19 @@ function getCustomerSignUpForm() {
                 <fieldset>
                 <legend class="main-color-header">Register New Customer Account</legend>
                     <div class= "pure-u-3-5">
-                     <input id = "userName" type="email" placeholder="Email">
-                     <input id = "password" type="password" placeholder="Password">
-                     <input id = "firstName" type="text" placeholder="First Name">
-                     <input id = "lastName" type="text" placeholder="Last Name">
-                     <input id = "address" type="text" placeholder="Address">
-                     <input id = "phone" type="text" placeholder="Phone">
+                     <input id = "userName" type="email" placeholder="Email" value="pork@gmail.com">
+                     <input id = "password" type="password" placeholder="Password" value="password">
+                     <input id = "firstName" type="text" placeholder="First Name" value= "firsty">
+                     <input id = "lastName" type="text" placeholder="Last Name" value = "Lasty">
+                     <input id = "address" type="text" placeholder="Address" value = "addr">
+                     <input id = "phone" type="text" placeholder="Phone" value = "345">
 
 
 
-                         <input id="cardNumber" type="text" placeholder="Credit Card #">
-                         <input id="cardName" type="text" placeholder="Credit Card Type">
-                         <input id="cvv" type="text" placeholder="CVV">
-                         <input id="expiration" type="date" placeholder="Expiration">
+                         <input id="cardNumber" type="text" placeholder="Credit Card #" value = "222222222222">
+                         <input id="cardName" type="text" placeholder="Credit Card Type" value = "visa">
+                         <input id="cvv" type="text" placeholder="CVV" value = "444">
+                         <input id="expiration" type="text" placeholder="Expiration" value = "2-18" >
                      </div>
 
                      </fieldset>
@@ -159,13 +159,15 @@ function collectFromLogin() {
     return JSON.stringify( data );
 };
 
+console.log("what the fuck is going on?") ; 
 function handleCustomerRegister() {
-    console.log( collectFromForm( "Customer" ) );
-    var url = hostName + "/customers/";
+    var url = hostName + "/customers/?key=123456789";
+    
+    console.log(url) ; 
     var dataType = "json";
     var verb = "POST";
     var contentType = "application/json";
-    var accepts = "application/json";
+    var accepts = "application/luc.customers+json";
     $.ajax( {
         jsonp: false,
         dataType: dataType,
@@ -176,11 +178,12 @@ function handleCustomerRegister() {
         data: collectFromForm( "Customer" ),
         success: function( data ) {
             console.log( data );
-            registerSuccess( data.Customer.userName + " has been created" );
+            currentUser = data.Customer.userName;
+            customerView.initialize(data.Customer.link) ; 
         },
         error: function( data, status, err ) {
             if ( Number( data.status ) == 200 ) {
-                registerSuccess( "Customer has been created" );
+                customerView.initialize(data.Customer.link) ; 
                 //ask me later
             } else {
                 console.log( data );
@@ -194,7 +197,8 @@ function handleCustomerRegister() {
 
 function handlePartnerRegister() {
     console.log( collectFromForm( "Partner" ) );
-    var url = hostName + "/partners";
+    var url = hostName + "/partners/?key=123456789";
+
     var dataType = "json";
     var verb = "POST";
     var contentType = "application/luc.partners+json";
@@ -252,19 +256,34 @@ function login() {
   var contentType = "application/luc.login+json";
   var accepts = "application/luc.partners+json, application/luc.customers+json";
   console.log("Logging in now...");
+  console.log("url: " + url) ; 
   $.ajax( {
       accepts: accepts,
       contentType: contentType,
       type: verb,
       url: url,
       data: collectFromLogin(),
-      success: function( data ) {
-          console.log( "Login successful" );
-          console.log( data );
+      success: function(data) {
+          handleLoginSuccess() ; 
       },
-      error: function( data ) {
+      error: function(data) {
+          if (data.status > 300){
           loginFailure( "Could not login..." );
+           console.log(data) ; 
+           setTimeout(function(){
+            $(".message").fadeOut(2000);
+
+          },5000);
+        }
+
+        handleLoginSuccess() ; 
       },
       dataType: dataType
   } );
+
+}
+
+function handleLoginSuccess(){
+  console.log( "Login successful" );
+  //todo continue ....
 }
