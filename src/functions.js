@@ -245,7 +245,7 @@ function loginFailure(msg) {
 function applySignInLogic() {
   $( "#sign-in-button" )
       .on( "click", function() {
-        console.log("Button works.")
+        console.log("Login button works.")
         login();
       }
     );
@@ -256,7 +256,15 @@ function login() {
   var dataType = "json";
   var verb = "PUT";
   var contentType = "application/luc.login+json";
-  var accepts = "application/luc.partners+json, application/luc.customers+json";
+  var accepts = "application/luc.customers+json";
+  var data = collectFromLogin();
+  var type = "";
+  if (data.type == "customer") {
+    type = "customer";
+  }
+  if (data.type == "partner") {
+    type = "partner";
+  }
   console.log("Logging in now...");
   console.log("url: " + url) ;
   $.ajax( {
@@ -265,16 +273,21 @@ function login() {
       dataType: dataType,
       type: verb,
       url: url,
-      data: collectFromLogin(),
+      data: data,
       success: function(data) {
           console.log("Login successfull.");
           console.log(data);
-          if (data.type == "customer") {
-            customerView.initialize(data.Customer.link)
+          if (type == "customer") {
+            console.log("Customer logged in.");
+            customerView.initialize(data.Customer.link);
+          }
+          if (type == "partner") {
+            console.log("Partner logged in.");
+            addProducts.initialize(data.Partner.link);
           }
       },
       error: function(data) {
-          if (data.status > 300){
+          if (data.status >= 200){
           loginFailure( "Could not login..." );
            console.log(data) ;
            setTimeout(function(){
