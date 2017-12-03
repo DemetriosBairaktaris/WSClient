@@ -256,7 +256,7 @@ function login() {
   var dataType = "json";
   var verb = "PUT";
   var contentType = "application/luc.login+json";
-  var accepts = "application/luc.customers+json";
+  var accepts = "application/json";
   var loginType = "";
   if ($("#button1").is(":checked")) {
     loginType = "customer";
