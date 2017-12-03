@@ -262,11 +262,16 @@ function login() {
   $.ajax( {
       accepts: accepts,
       contentType: contentType,
+      dataType: dataType,
       type: verb,
       url: url,
       data: collectFromLogin(),
       success: function(data) {
-          handleLoginSuccess() ;
+          console.log("Login successfull.");
+          console.log(data);
+          if (data.type == "customer") {
+            customerView.initialize(data.Customer.link)
+          }
       },
       error: function(data) {
           if (data.status > 300){
@@ -278,12 +283,5 @@ function login() {
           },5000);
         }
       },
-      dataType: dataType
   } );
-
-}
-
-function handleLoginSuccess(){
-  console.log( "Login successful" );
-  //todo continue ....
 }
