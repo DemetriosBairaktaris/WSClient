@@ -257,14 +257,14 @@ function login() {
   var verb = "PUT";
   var contentType = "application/luc.login+json";
   var accepts = "application/luc.customers+json";
-  var data = collectFromLogin();
-  var type = "";
-  if (data.type == "customer") {
-    type = "customer";
+  var loginType = "";
+  if ($("#button1").is(":checked")) {
+    loginType = "customer";
   }
-  if (data.type == "partner") {
-    type = "partner";
+  if ($("#button2").is(":checked")) {
+    loginType = "partner";
   }
+  console.log(loginType);
   console.log("Logging in now...");
   console.log("url: " + url) ;
   $.ajax( {
@@ -273,15 +273,15 @@ function login() {
       dataType: dataType,
       type: verb,
       url: url,
-      data: data,
+      data: collectFromLogin(),
       success: function(data) {
           console.log("Login successfull.");
           console.log(data);
-          if (type == "customer") {
+          if (loginType == "customer") {
             console.log("Customer logged in.");
             customerView.initialize(data.Customer.link);
           }
-          if (type == "partner") {
+          if (loginType == "partner") {
             console.log("Partner logged in.");
             addProducts.initialize(data.Partner.link);
           }
