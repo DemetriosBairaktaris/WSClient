@@ -150,20 +150,22 @@ function collectFromForm( objectName ) {
 function collectFromLogin() {
     var data = {}
     data[ "Login" ] = {}
-    var $inputs = $( "#sign-in-form * input" );
-    for ( var i = 0; i < $inputs.length; i++ ) {
-        data[ "Login" ][ $inputs[ i ].id ] = String( $( $inputs[ i ] )
-            .val() );
-        console.log( JSON.stringify( data[ "Login" ] ) );
+    data["Login"]["userName"] = String($("#userName").val());
+    data["Login"]["password"] = String($("#password").val());
+    if ($("#button1").is(":checked")) {
+      data["Login"]["type"] = "customer";
     }
+    if ($("#button2").is(":checked")) {
+      data["Login"]["type"] = "partner";
+    }
+    console.log(JSON.stringify(data));
     return JSON.stringify( data );
 };
 
-console.log("what the fuck is going on?") ; 
 function handleCustomerRegister() {
     var url = hostName + "/customers/?key=123456789";
-    
-    console.log(url) ; 
+
+    console.log(url) ;
     var dataType = "json";
     var verb = "POST";
     var contentType = "application/json";
@@ -179,11 +181,11 @@ function handleCustomerRegister() {
         success: function( data ) {
             console.log( data );
             currentUser = data.Customer.userName;
-            customerView.initialize(data.Customer.link) ; 
+            customerView.initialize(data.Customer.link) ;
         },
         error: function( data, status, err ) {
             if ( Number( data.status ) == 200 ) {
-                customerView.initialize(data.Customer.link) ; 
+                customerView.initialize(data.Customer.link) ;
                 //ask me later
             } else {
                 console.log( data );
@@ -256,7 +258,7 @@ function login() {
   var contentType = "application/luc.login+json";
   var accepts = "application/luc.partners+json, application/luc.customers+json";
   console.log("Logging in now...");
-  console.log("url: " + url) ; 
+  console.log("url: " + url) ;
   $.ajax( {
       accepts: accepts,
       contentType: contentType,
@@ -264,19 +266,17 @@ function login() {
       url: url,
       data: collectFromLogin(),
       success: function(data) {
-          handleLoginSuccess() ; 
+          handleLoginSuccess() ;
       },
       error: function(data) {
           if (data.status > 300){
           loginFailure( "Could not login..." );
-           console.log(data) ; 
+           console.log(data) ;
            setTimeout(function(){
             $(".message").fadeOut(2000);
 
           },5000);
         }
-
-        handleLoginSuccess() ; 
       },
       dataType: dataType
   } );

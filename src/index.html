@@ -39,6 +39,9 @@
 
         			<button id = "sign-in-button" type="submit" class="pure-button pure-button-primary">Sign in</button>
         			<button id = "register-button" type="submit" class="pure-button pure-button-inverted">Register</button>
+						</br>
+							<input id="button1" type="radio" name="type" value="customer" checked>Customer</input>
+							<input id="button2" type="radio" name="type" value="partner">Partner</input>
     			</fieldset>
 			</div>
 
@@ -59,12 +62,12 @@
 		currentUser = null ;
 
 		$(document).ready(function(){
-			console.log("Yeah") ;
+			console.log("Document Ready") ;
 			$main  = $("main") ;
 			applySignInLogic();
-			skipLogin(false) ; 
+			skipLogin(false) ;
 	    	$("#register-button").click(function(){
-	    		console.log("yeah");
+	    		console.log("Register Button Pressed");
 	        	$("#sign-in-form").remove() ;
 	        	var html =  getRegisterHtml() ;
 	        	$main.hide() ;
