@@ -36,8 +36,9 @@ function handlePut( link ) {
 	var inputValue = $( "#" + link.rel.replace( ".", "" )
 			.replace( " ", "" ) + "_input" )
 		.val();
-	var url = hostName + link.uri + "?key=123456789";
+	var url = hostName + link.uri  ; 
 	url = url.split( "{" )[ 0 ] + inputValue;
+	url +=  "?key=123456789"; 
 	console.log( url );
 	var verb = "PUT";
 	var accepts = "application/luc.partners+json";
@@ -46,7 +47,11 @@ function handlePut( link ) {
 		accepts: accepts,
 		type: verb,
 		url: url,
-		success: function( data ) {},
+		success: function( data ) {
+			$("main").
+				prepend( getSuccessMsg("Updated")) ; 
+			$(".message").fadeOut(10000)  ; 
+		},
 		error: function( data ) {
 			$( "main" )
 				.append( getFailureMsg( "Could Not Update" ) )
@@ -177,10 +182,10 @@ function getAddItemForm() {
 			<fieldset>
         		<legend class="main-color-header">Add a product...</legend>
         			<div class= "pure-u-3-5">
-        			 <input id = "desc" type="text" placeholder="Product Name">
+        			 <input id = "name" type="text" placeholder="Product Name">
        				 <input id = "cost" type="text" placeholder="Cost">
        				 <input id = 'stock' type="number" placeholder= "Stock">
-       				 <input id = "name" type="text" placeholder="Description">
+       				 <input id = "desc" type="text" placeholder="Description">
        				</div>
        				<div class='pure-u-5-5'>
 					    <button id="product-submit-button"class="pure-button">Add Product</button>
