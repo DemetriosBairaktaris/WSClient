@@ -1,38 +1,38 @@
 var customerView = {
-	
+
 	initialize: function(links){
 		$("main").fadeOut(function(){
 			$("main").empty() ;
-			$("main").fadeIn() ; 
+			$("main").fadeIn() ;
 		var i = 0 ;
 		links.forEach(function(link){
-			console.log(i+=1) ; 
+			console.log(i+=1) ;
 			if(link.rel=="Update customer information."){
-				console.log("Update customer") ; 
+				console.log("Update customer") ;
 				setUpUpdateCustomerInfo(link) ;
 			}
 			else if(link.rel =="Delete customer."){
-				setUpDeleteCustomer(link) ; 
+				setUpDeleteCustomer(link) ;
 			}
-			else if (link.rel =="search products"){	
-				setUpSearchProducts(link) ; 
+			else if (link.rel =="search products"){
+				setUpSearchProducts(link) ;
 			}
 		});
-		}) ; 
+		}) ;
 	}
-} ; 
+} ;
 
 function setUpUpdateCustomerInfo(link){
-	$("main").append(getCustomerUpdateForm()) ; 
+	$("main").append(getCustomerUpdateForm()) ;
 	$("#update-submit-button").on("click",function(){
-		console.log(collectFromCustomerUpdateForm()); 
+		console.log(collectFromCustomerUpdateForm());
 		var url = hostName + link.uri + "?key=123456789";
-		
+
 		console.log( url );
 		var verb = "PUT";
-		var contentType = "application/luc.customers+json" ; 
+		var contentType = "application/luc.customers+json" ;
 		var accepts = "application/luc.customers+json";
-		
+
 		$.ajax( {
 			accepts: accepts,
 			contentType: contentType,
@@ -41,27 +41,27 @@ function setUpUpdateCustomerInfo(link){
 			dataType: "json",
 			data: collectFromCustomerUpdateForm(),
 			success: function( data ) {
-				$("main").prepend(getSuccessMsg("Updated Your Account")) ; 
+				$("main").prepend(getSuccessMsg("Updated Your Account")) ;
 			},
 			error: function( data ) {
 				if(data.status < 300){
-					$(".success-message").remove() ; 
+					$(".success-message").remove() ;
 					$("main").prepend(getSuccessMsg("Updated Your Account")) ;
 
 				}
 				else{
 					console.log(data) ;
 					$( "main" )
-						.append( getFailureMsg( "Could Not Update" ) ) ; 
+						.append( getFailureMsg( "Could Not Update" ) ) ;
 				}
 			}
 		});
 	});
-	
+
 }
 
 function setUpDeleteCustomer(link){
-	$("main").append(getCustomerDeleteForm()) ; 
+	$("main").append(getCustomerDeleteForm()) ;
 	$("#delete-customer").on("click",function(){
 		var url = hostName + link.uri + "?key=123456789";
 		var verb = "DELETE";
@@ -88,7 +88,7 @@ function setUpDeleteCustomer(link){
 function setUpSearchProducts(link){
 	$("main").append(getSearchProductForm());
 	$("#search-item-button").on("click",function(){
-		var searchTerm = $("#item-search").val(); 
+		var searchTerm = $("#item-search").val();
 		var url = hostName + link.uri + searchTerm +"?key=123456789";
 		var verb = "GET";
 		var accepts = "application/luc.products+json";
@@ -98,8 +98,8 @@ function setUpSearchProducts(link){
 			type: verb,
 			url: url,
 			success: function( data ) {
-				console.log(data) ; 
-				displaySearchResults(data) ; 
+				console.log(data) ;
+				displaySearchResults(data) ;
 			},
 			error: function( data ) {
 				$( "main" )
@@ -107,12 +107,12 @@ function setUpSearchProducts(link){
 			}
 		});
 	});
-} ; 
+} ;
 
 
 function getContainer(){
 
-	return `<div class="container island center pure-u-4-5"></div>` ; 
+	return `<div class="container island center pure-u-4-5"></div>` ;
 }
 
 function getCustomerUpdateForm() {
@@ -122,18 +122,18 @@ function getCustomerUpdateForm() {
                 <fieldset>
                 <legend class="main-color-header">Update Account</legend>
                     <div class= "pure-u-3-5">
-                     <input id = "password" type="password" placeholder="Password" value="password">
-                     <input id = "firstName" type="text" placeholder="First Name" value= "firsty">
-                     <input id = "lastName" type="text" placeholder="Last Name" value = "Lasty">
-                     <input id = "address" type="text" placeholder="Address" value = "addr">
-                     <input id = "phone" type="text" placeholder="Phone" value = "345">
+                     <input id = "password" type="password" placeholder="Password">
+                     <input id = "firstName" type="text" placeholder="First Name">
+                     <input id = "lastName" type="text" placeholder="Last Name">
+                     <input id = "address" type="text" placeholder="Address">
+                     <input id = "phone" type="text" placeholder="Phone">
 
 
 
-                         <input id="cardNumber" type="text" placeholder="Credit Card #" value = "222222222222">
-                         <input id="cardName" type="text" placeholder="Credit Card Type" value = "visa">
-                         <input id="cvv" type="text" placeholder="CVV" value = "444">
-                         <input id="expiration" type="text" placeholder="Expiration" value = "2-18" >
+                         <input id="cardNumber" type="text" placeholder="Credit Card #">
+                         <input id="cardName" type="text" placeholder="Credit Card Type">
+                         <input id="cvv" type="text" placeholder="CVV">
+                         <input id="expiration" type="text" placeholder="Expiration">
                      </div>
 
                      </fieldset>
@@ -155,7 +155,7 @@ function getCustomerDeleteForm(){
 			<button id='delete-customer' class='pure-button pure-u-3-5'>Delete Account</button>
 		</div>
 	`;
-} ; 
+} ;
 
 function getSearchProductForm(){
 
@@ -167,11 +167,11 @@ function getSearchProductForm(){
 		</div>
 	`;
 
-} ; 
+} ;
 
 
 function collectFromCustomerUpdateForm( ) {
-	var objectName = "Customer" ; 
+	var objectName = "Customer" ;
     var data = {}
     data[ objectName ] = {}
     var $inputs = $( "#update-form * input" );
@@ -180,35 +180,35 @@ function collectFromCustomerUpdateForm( ) {
             .val() );
         console.log( JSON.stringify( data[ objectName ] ) );
     }
-    data[ objectName ]["userName"] = currentUser ; 
+    data[ objectName ]["userName"] = currentUser ;
     return JSON.stringify( data );
 };
 
 
 function displaySearchResults(data){
-	var Product = data.Product ; 
-	var link = null ; 
+	var Product = data.Product ;
+	var link = null ;
 	if (data.Product.length > 0){
-		link = data.Product[0].link ; 
+		link = data.Product[0].link ;
 	}
-	console.log(data.Product.length) ; 
+	console.log(data.Product.length) ;
 	$(".table").remove()
-	var rows = "" ; 
+	var rows = "" ;
 	data.Product.forEach(function(product){
-		var td = "<td>" ; 
+		var td = "<td>" ;
 		rows += "<tr class='table-row'>" +
-			td + product.name + "</td>"+ 
-			td +"$"+ product.cost + "</td>"+ 
-			td + product.companyUserName + "</td>"+ 
-			td + product.desc + "</td>"+ 
+			td + product.name + "</td>"+
+			td +"$"+ product.cost + "</td>"+
+			td + product.companyUserName + "</td>"+
+			td + product.desc + "</td>"+
 			td + product.stock + " in stock</td>"+
-			"<td class>" + "" 
+			"<td class>" + ""
 		"</tr>"
 	});
 	var table = `
 	<H3 class="table"> Search Results</H3>
 	<table class="center table pure-table pure-table-horizontal">
-		
+
     	<tbody>
         ` + rows + `
 	    </tbody>
@@ -217,35 +217,35 @@ function displaySearchResults(data){
 		<input id='order-amount' class = 'table' type='number'>
 	`
 
-	$("#search-item-form").hide() ; 
-	$("#search-item-form").append(table) ; 
+	$("#search-item-form").hide() ;
+	$("#search-item-form").append(table) ;
 	$("#search-item-form").slideDown() ;
 
 	if(data.Product.length == 0){
-		$("#order-button").remove() ; 
-		$("#order-amount").remove() ; 
+		$("#order-button").remove() ;
+		$("#order-amount").remove() ;
 	}
 	$("#order-button").on("click",function(){
-		var order = {} ; 
-		order["Orders"] = {"requests":[]} ; 
+		var order = {} ;
+		order["Orders"] = {"requests":[]} ;
 		var orders = order["Orders"]["requests"]  ;
 		orders.push(
 			{"quantity": $("#order-amount").val(),
 				"productName": Product[0].name ,
-				"customer": currentUser 
+				"customer": currentUser
 
 			});
-		sendOrder(order,link) ; 
-	}) ; 
+		sendOrder(order,link) ;
+	}) ;
 };
 
 
 function sendOrder(order,link){
-	order = JSON.stringify(order) ; 
-	console.log(order) ; 
+	order = JSON.stringify(order) ;
+	console.log(order) ;
 	var url = hostName + link.uri +"?key=123456789";
 		var verb = "POST";
-		var contentType = "application/luc.orders+json" ; 
+		var contentType = "application/luc.orders+json" ;
 		var accepts = "application/luc.orders+json";
 		console.log( url );
 		$.ajax( {
@@ -255,36 +255,36 @@ function sendOrder(order,link){
 			data: order,
 			url: url,
 			success: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
+				console.log(data) ;
+				$(".message").remove() ;
 				$("main").append(getSuccessMsg("Order filled, order#: " + data.Order.orderId))
-				displayOrder(data.Order) ; 
-			 
+				displayOrder(data.Order) ;
+
 			},
 			error: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
+				console.log(data) ;
+				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Order, " + data.responseText ));
 			}
 		});
 
-		
+
 } ;
 
 
 function displayOrder(order){
-	var links =  order.link ; 
-	var orderId = order.orderId ; 
-	var status = order.status; 
+	var links =  order.link ;
+	var orderId = order.orderId ;
+	var status = order.status;
 	var timestamp = order.timestamp ;
-	$("main").append(getOrdersHtml()) ; 
+	$("main").append(getOrdersHtml()) ;
 	links.forEach(function(link){
 		$("#"+link.rel.replace(" ","")).on("click",function(){
-			handleOrderBehavior(link) ; 
+			handleOrderBehavior(link) ;
 		});
 	})  ;
-}  ; 
+}  ;
 
 
 function getOrdersHtml(){
@@ -294,27 +294,27 @@ function getOrdersHtml(){
 			<button class='pure-button' id='CancelOrder'>Cancel Order</button>
 			<button class='pure-button' id = 'Checkstatus'>Check Order Status</button>
 		</div>
-	` ; 
+	` ;
 };
 
 function handleOrderBehavior(link){
 	if(link.rel == "Check status"){
 		var url = hostName + link.uri + "?key=123456789";
-		var verb = "GET" ; 
+		var verb = "GET" ;
 
 		$.ajax( {
-		
+
 			type: verb,
 			url: url,
 			success: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
-				alert("Order status: " + data) ; 
-			 
+				console.log(data) ;
+				$(".message").remove() ;
+				alert("Order status: " + data) ;
+
 			},
 			error: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
+				console.log(data) ;
+				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Get Order Status, " + data.responseText ));
 			}
@@ -323,28 +323,28 @@ function handleOrderBehavior(link){
 	}
 	else{
 		var url = hostName + link.uri + "?key=123456789";
-		var verb = "DELETE" ; 
+		var verb = "DELETE" ;
 
 		$.ajax( {
-		
+
 			type: verb,
 			url: url,
 			success: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
-				alert("Order deleted") ; 
-				$(".order-actions").remove() ; 
-			 
+				console.log(data) ;
+				$(".message").remove() ;
+				alert("Order deleted") ;
+				$(".order-actions").remove() ;
+
 			},
 			error: function( data ) {
-				console.log(data) ; 
-				$(".message").remove() ; 
+				console.log(data) ;
+				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Delete Order, " + data.responseText ));
 			}
 		});
 	}
-}; 
+};
 /*
 0 {action: "PUT", contentType: "application/luc.customers+xml, application/luc.customers+json", rel: "Update customer information.", uri: "/customers"}
 1 {action: "DELETE", contentType: "none", rel: "Delete customer.", uri: "/customers/pork@gmail.com"}

@@ -34,19 +34,19 @@ function getCustomerSignUpForm() {
                 <fieldset>
                 <legend class="main-color-header">Register New Customer Account</legend>
                     <div class= "pure-u-3-5">
-                     <input id = "userName" type="email" placeholder="Email" value="pork@gmail.com">
-                     <input id = "password" type="password" placeholder="Password" value="password">
-                     <input id = "firstName" type="text" placeholder="First Name" value= "firsty">
-                     <input id = "lastName" type="text" placeholder="Last Name" value = "Lasty">
-                     <input id = "address" type="text" placeholder="Address" value = "addr">
-                     <input id = "phone" type="text" placeholder="Phone" value = "345">
+                     <input id = "userName" type="email" placeholder="Email" required>
+                     <input id = "password" type="password" placeholder="Password" required>
+                     <input id = "firstName" type="text" placeholder="First Name" required>
+                     <input id = "lastName" type="text" placeholder="Last Name" required>
+                     <input id = "address" type="text" placeholder="Address" required>
+                     <input id = "phone" type="text" placeholder="Phone" required>
 
 
 
-                         <input id="cardNumber" type="text" placeholder="Credit Card #" value = "222222222222">
-                         <input id="cardName" type="text" placeholder="Credit Card Type" value = "visa">
-                         <input id="cvv" type="text" placeholder="CVV" value = "444">
-                         <input id="expiration" type="text" placeholder="Expiration" value = "2-18" >
+                         <input id="cardNumber" type="text" placeholder="Credit Card #" required>
+                         <input id="cardName" type="text" placeholder="Credit Card Type" required>
+                         <input id="cvv" type="text" placeholder="CVV" required>
+                         <input id="expiration" type="text" placeholder="Expiration" required>
                      </div>
 
                      </fieldset>
@@ -121,7 +121,7 @@ function applyRegisterLogic() {
             } else {
                 $main.append( getPartnerSignUpForm() );
             }
-            applyRegisterLogic(); //psudo-recursion, coooooool
+            applyRegisterLogic();
         } );
     $( "#register-submit-button" )
         .on( "click", function() {
@@ -163,12 +163,12 @@ function collectFromLogin() {
 };
 
 function handleCustomerRegister() {
-    var url = hostName + "/customers/?key=123456789";
+    var url = hostName + "/customers?key=123456789";
 
     console.log(url) ;
     var dataType = "json";
     var verb = "POST";
-    var contentType = "application/json";
+    var contentType = "application/luc.customers+json";
     var accepts = "application/luc.customers+json";
     $.ajax( {
         jsonp: false,
@@ -199,7 +199,7 @@ function handleCustomerRegister() {
 
 function handlePartnerRegister() {
     console.log( collectFromForm( "Partner" ) );
-    var url = hostName + "/partners/?key=123456789";
+    var url = hostName + "/partners?key=123456789";
 
     var dataType = "json";
     var verb = "POST";
@@ -217,8 +217,7 @@ function handlePartnerRegister() {
             $( "#current-user" )
                 .text( data.Partner.userName );
             currentUser = data.Partner.userName;
-            addProducts.initialize( data.Partner.link ); //need to see
-            //registerSuccess( data.Partner.userName + " has been created");
+            partnerView.initialize( data.Partner.link );
         },
         error: function( data ) {
             registerFailure( "Could not create Partner" );
@@ -283,18 +282,16 @@ function login() {
           }
           if (loginType == "partner") {
             console.log("Partner logged in.");
-            addProducts.initialize(data.Partner.link);
+            partnerView.initialize(data.Partner.link);
           }
       },
       error: function(data) {
-          if (data.status >= 200){
           loginFailure( "Could not login..." );
            console.log(data) ;
            setTimeout(function(){
             $(".message").fadeOut(2000);
-
           },5000);
-        }
+
       },
   } );
 }

@@ -1,4 +1,4 @@
-addProducts = {
+partnerView = {
 	initialize: function( links ) {
 		$( "main" )
 			.empty();
@@ -9,7 +9,7 @@ addProducts = {
 }
 
 function handleDelete( link ) {
-	var url = hostName + link.uri;
+	var url = hostName + link.uri + "?key=123456789";
 	var verb = "DELETE";
 	var accepts = "application/luc.partners+json";
 	console.log( url );
@@ -36,7 +36,7 @@ function handlePut( link ) {
 	var inputValue = $( "#" + link.rel.replace( ".", "" )
 			.replace( " ", "" ) + "_input" )
 		.val();
-	var url = hostName + link.uri;
+	var url = hostName + link.uri + "?key=123456789";
 	url = url.split( "{" )[ 0 ] + inputValue;
 	console.log( url );
 	var verb = "PUT";
@@ -69,7 +69,7 @@ function collectFromProductForm() {
 }
 
 function handleAddProduct( link ) {
-	var url = hostName + link.uri;
+	var url = hostName + link.uri + "?key=123456789";
 	var dataType = "json";
 	var verb = "POST";
 	var contentType = "application/luc.products+json";
