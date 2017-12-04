@@ -7,6 +7,10 @@
 		<link href="https://fonts.googleapis.com/css?family=Economica" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src = "customerView.js" type="text/javascript"></script>
+		<script src = "partnerView.js" type="text/javascript"></script>
+		<script src = "functions.js" type="text/javascript"></script>
 	</head>
 	<body>
 
@@ -14,37 +18,87 @@
 					<div class="pure-menu pure-menu-horizontal">
 
     					<a href="#" class="pure-menu-heading on-dark-text" id="site-title">Comp 433 WebClient</a>
-    				
+    					<div id="current-user" class="pure-menu-item"></div>
+
 					</div>
 
 		</section>
 
-		
+
 
 		<main class='pure-g'>
-			
+
 			<!--MainContent Here-->
 
-			<form id="sign-in-form"class="pure-form pure-u-4-5 center island">
+			<div id="sign-in-form"class="pure-form pure-u-4-5 center island">
     			<fieldset>
         		<legend class="main-color-header">Sign In</legend>
 
-        			 <input type="email" placeholder="Email">
-       				 <input type="password" placeholder="Password">
+        			 <input id="userName" type="email" placeholder="Email">
+       				 <input id="password" type="password" placeholder="Password">
 
-        			<button type="submit" class="pure-button pure-button-primary">Sign in</button>
+        			<button id = "sign-in-button" type="submit" class="pure-button pure-button-primary">Sign in</button>
+        			<button id = "register-button" type="submit" class="pure-button pure-button-inverted">Register</button>
+						</br>
+							<input id="button1" type="radio" name="type" value="customer" checked>Customer</input>
+							<input id="button2" type="radio" name="type" value="partner">Partner</input>
     			</fieldset>
-			</form>
+			</div>
 
-				
-			
-			
+
+
+
 		</main>
 
 
 	</body>
 
-	<footer class="pure-g">
-		<p class="center island pure-u-5-5" >By Demetrios and Thaddeus</p>
-	<footer>
+
+	<script type="text/javascript">
+		//variables declaration:
+		currentUser = null ;
+
+		$(document).ready(function(){
+			console.log("Document Ready") ;
+			$main  = $("main") ;
+			applySignInLogic();
+			skipLoginToPartner(false) ;
+			skipLoginToCustomer(false) ; 
+	    	$("#register-button").click(function(){
+	    		console.log("Register Button Pressed");
+	        	$("#sign-in-form").remove() ;
+	        	var html =  getRegisterHtml() ;
+	        	$main.hide() ;
+	        	$main.append(html) ;
+	        	$main.fadeIn();
+	   			applyRegisterLogic() ;
+	    	});
+
+
+		});
+
+		function skipLoginToPartner(b){
+			if (b == true){
+				$("#sign-in-form").remove() ;
+	        	var html =  getRegisterHtml() ;
+	        	$main.hide() ;
+	        	$main.append(html) ;
+	        	$main.fadeIn();
+	   			applyRegisterLogic() ;
+			}
+		}
+		function skipLoginToCustomer(b){
+			if (b == true){
+				currentUser = "mariasmith@gmail.com";
+				$("#sign-in-form").remove() ;
+	        	var links = [{action: "PUT", contentType: "application/luc.customers+xml, application/luc.customers+json", rel: "Update customer information.", uri: "/customers"},
+ 					{action: "DELETE", contentType: "none", rel: "Delete customer.", uri: "/customers/mariasmith@gmail.com"},
+					 {action: "GET", contentType: "none", rel: "search products", uri: "/products/"}] ; 
+	        	customerView.initialize(links); 
+	   			
+			}
+		}
+	</script>
+
+
 </html>
