@@ -1,23 +1,52 @@
 
+
+:root{
+	--main-site-color: #424e68;
+	
+}
 body{
 	
-	--main-site-color:  #68a2ff ;
-  	background-color: #efefef ;  
-
+  	background-color: #efefef ; 
+}
+body text,
+body *{
+	font-family: "Arial", sans-serif;
 }
 
+
+.pure-button.pure-button-primary,
+.pure-button {
+	background-color: var(--main-site-color); 
+	color: white ;
+	margin-top: 2px ;
+	margin-bottom: 2px;
+}
 .pure-button-inverted{
 	color: var(--main-site-color);
 	background-color: white ; 
 	border-style: solid ; 
 	border-width: 1px;
 	border-color: var(--main-site-color);
+
+}
+
+.pure-button-active{
+	text-decoration: bold ; 
+	border-style: solid ; 
+	border-color: #7A7 ; 
+	border-width: 1px;
+}
+
+a{
+	color: var(--main-site-color);
+	cursor: pointer; 
 }
 
 #site-title{
 
 	font-size: 2em ; 
 	font-family: 'Economica', sans-serif;
+
 }
 
 .on-dark-text {
@@ -35,9 +64,6 @@ main{
 	margin-top: 5% ;
 }
 
-.pure-button.pure-button-primary{
-	background-color: var(--main-site-color); 
-}
 
 .island{
 	box-shadow: 0px 2px 5px -3px rgba(0,0,0,1);
@@ -53,7 +79,68 @@ main{
 	margin-right: auto ; 
 }
 
-footer{
-	bottom: 0;
-	position: absolute; 
+.pure-form input{
+	margin-top: 2px; 
+	margin-bottom: 2px ; 
+}
+.pure-form-stacked input{
+	text-align: center ; 
+	margin-left: auto!important ; 
+	margin-right: auto !important; 
+}
+
+.success-message{
+	background-color: #6A6 ; 
+	border-radius: 0; 
+	
+}
+.success-message p{
+	text-decoration: bold ;
+	color: #FFF;
+}
+
+.failure-message{
+	background-color: #d33b3b; 
+	border-radius: 0; 
+	
+}
+
+.failure-message p{
+	text-decoration: bold ;
+	color: #FFF;
+}
+
+
+
+.table-row{
+	-webkit-box-shadow: inset 0px -1px 19px 6px rgba(239,239,239,1);
+	-moz-box-shadow: inset 0px -1px 19px 6px rgba(239,239,239,1);
+	box-shadow: inset 0px -1px 19px 6px rgba(239,239,239,1);
+	background-color: white ; 
+}
+
+.table-row td{
+	color: var(--main-site-color);
+
+}
+
+.table-row:hover{
+	cursor: pointer;
+	background-color: #efefef ; 
+}
+
+.pure-menu-item{
+
+	font-size: 1.2em ; 
+	border-top-style: solid ;
+	border-width: 1px ;
+	border-color: rgba(1,1,1,.1) ;
+	padding: 5px ;  
+	color: var(--main-site-color);
+
+}
+
+.pure-button-danger{
+	background-color: #bc2129 ; 
+	color: white;
 }
