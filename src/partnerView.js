@@ -212,22 +212,22 @@ function addGetOrders(link){
 function displayOrders(orders){
 	
 	$(".orders").remove() ; 
-	var html = `<ul class=' orders pure-menu-list pure-u-4-5 island center'>
+	var html = `<div class='orders pure-u-4-5 island center'><ul class=' orders pure-menu-list pure-u-23-24'>
 	<h3>Customer Orders</h3>
 	`;
 	orders.forEach(function (order){
-		html += `<ul  id='order`+ order.orderId +`'class='pure-menu-item'>Order #` + order.orderId +
+		html += `<li  id='order`+ order.orderId +`'class='pure-menu-item'>Order #` + order.orderId +
 			", Status: " + order.status + ", Customer: " + order.customer + `
 
    			<button name = '`+order.link[0].uri+`' class="pure-button pure-button-inverted order-manip">Fullfill</button>
     		<button name = '`+order.link[2].uri+`' class="pure-button pure-button-inverted order-manip">Cancel</button>
     		<button name = '`+order.link[1].uri+`' class="pure-button pure-button-inverted order-manip">Ship</button>
 			
-		</ul>`
+		</li>`
 
 		//console.log("#order"+order.orderId + " button") ; 
 	});
-	html += `</ul>`; 
+	html += `</ul></div>`; 
 	$("main").append(html) ;
 	$(".order-manip").on("click",function(){
 		

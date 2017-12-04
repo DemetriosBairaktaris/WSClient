@@ -2,6 +2,7 @@
 
 :root{
 	--main-site-color: #424e68;
+	
 }
 body{
 	
@@ -109,11 +110,7 @@ main{
 	color: #FFF;
 }
 
-footer{
-	bottom: 0 ;
 
-	
-}
 
 .table-row{
 	-webkit-box-shadow: inset 0px -1px 19px 6px rgba(239,239,239,1);
@@ -133,7 +130,7 @@ footer{
 }
 
 .pure-menu-item{
-	
+
 	font-size: 1.2em ; 
 	border-top-style: solid ;
 	border-width: 1px ;
@@ -141,4 +138,9 @@ footer{
 	padding: 5px ;  
 	color: var(--main-site-color);
 
+}
+
+.pure-button-danger{
+	background-color: #bc2129 ; 
+	color: white;
 }
