@@ -254,7 +254,7 @@ function login() {
   var url = hostName + "/login?key=123456789";
   var dataType = "json";
   var verb = "PUT";
-  var contentType = "application/json";
+  var contentType = "application/luc.login+json";
   var accepts = "application/json";
   var loginType = "";
   if ($("#button1").is(":checked")) {
@@ -280,13 +280,13 @@ function login() {
             console.log("Customer logged in.");
             currentUser = data.Customer.userName ;
             customerView.initialize(data.Customer.link);
-            console.log("Setting current customer: " + data.Customer.userName) ; 
+            console.log("Setting current customer: " + data.Customer.userName) ;
           }
           else if (loginType == "partner") {
             console.log("Partner logged in.");
-            currentUser = data.Partner.userName ; 
+            currentUser = data.Partner.userName ;
             partnerView.initialize(data.Partner.link);
-            console.log("Setting current partner" + data.Partner.userName) ; 
+            console.log("Setting current partner" + data.Partner.userName) ;
           }
       },
       error: function(data) {
