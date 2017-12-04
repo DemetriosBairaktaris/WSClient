@@ -280,11 +280,13 @@ function login() {
             console.log("Customer logged in.");
             currentUser = data.Customer.userName ;
             customerView.initialize(data.Customer.link);
+            console.log("Setting current customer: " + data.Customer.userName) ; 
           }
-          if (loginType == "partner") {
+          else if (loginType == "partner") {
             console.log("Partner logged in.");
             currentUser = data.Partner.userName ; 
             partnerView.initialize(data.Partner.link);
+            console.log("Setting current partner" + data.Partner.userName) ; 
           }
       },
       error: function(data) {

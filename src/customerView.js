@@ -187,9 +187,10 @@ function collectFromCustomerUpdateForm( ) {
 
 function displaySearchResults(data){
 	var Product = data.Product ;
-	var link = null ;
+	var links = null ;
 	if (data.Product.length > 0){
-		link = data.Product[0].link ;
+		links = data.Product[0].link ;
+
 	}
 	console.log(data.Product.length) ;
 	$(".table").remove()
@@ -215,6 +216,7 @@ function displaySearchResults(data){
 	</table>
 		<button id = 'order-button' class= 'table pure-button'>Order</button>
 		<input id='order-amount' class = 'table' type='number'>
+		<button id='get-reviews-button' class='table pure-button pure-button-inverted'>Get Reviews</button>
 	`
 
 	$("#search-item-form").hide() ;
@@ -224,6 +226,7 @@ function displaySearchResults(data){
 	if(data.Product.length == 0){
 		$("#order-button").remove() ;
 		$("#order-amount").remove() ;
+		$("#get-reviews-button").remove() ; 
 	}
 	$("#order-button").on("click",function(){
 		var order = {} ;
@@ -235,10 +238,65 @@ function displaySearchResults(data){
 				"customer": currentUser
 
 			});
-		sendOrder(order,link) ;
+		links.forEach(function(link){
+			if(link.action == "POST"){
+				sendOrder(order,link) ;
+			}
+		});	
+		
 	}) ;
+
+	$("#get-reviews-button").on("click",function(){
+		links.forEach(function(link){
+			if(link.action == "GET"){
+				getReviews(link) ; 
+			}
+		});	
+	});
 };
 
+function displayReviews(reviews){
+	var reviewsArr = reviews.review ; 
+
+	var html = `<ul id='reviews' class = 'table pure-menu-list center island pure-u-4-5'>
+				<h3>Product Reviews</h3>
+	` ;
+		reviewsArr.forEach(function(r){
+			html += `<li class = 'pure-menu-item pure-u-23-24'>
+				`
+				+ r.review + `</li>`  ; 
+
+		});
+
+				html += `</ul>` ; 
+	 ;  
+	$("#reviews").remove(); 
+	$("main").append(html) ; 
+};
+
+function getReviews(link){
+
+	var accepts =  "application/luc.reviews+json",
+		verb = "GET",
+		url = hostName + link.uri + "?key=123456789"; 
+	 $.ajax( {
+			accepts: accepts,
+			type: verb,
+			url: url,
+			success: function( data ) {
+				console.log(data) ;
+				 
+				displayReviews(data) ; 
+			},
+			error: function( data ) {
+				console.log(data) ;
+				$(".message").remove() ;
+				$( "main" )
+					.prepend( getFailureMsg( "Could not Get Product Reviews, " + data.responseText ));
+				$(".message").fadeOut(5000) ; 
+			}
+		});
+};
 
 function sendOrder(order,link){
 	order = JSON.stringify(order) ;

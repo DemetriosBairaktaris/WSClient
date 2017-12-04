@@ -65,7 +65,8 @@
 			console.log("Document Ready") ;
 			$main  = $("main") ;
 			applySignInLogic();
-			skipLogin(false) ;
+			skipLoginToPartner(false) ;
+			skipLoginToCustomer(false) ; 
 	    	$("#register-button").click(function(){
 	    		console.log("Register Button Pressed");
 	        	$("#sign-in-form").remove() ;
@@ -79,7 +80,7 @@
 
 		});
 
-		function skipLogin(b){
+		function skipLoginToPartner(b){
 			if (b == true){
 				$("#sign-in-form").remove() ;
 	        	var html =  getRegisterHtml() ;
@@ -87,6 +88,17 @@
 	        	$main.append(html) ;
 	        	$main.fadeIn();
 	   			applyRegisterLogic() ;
+			}
+		}
+		function skipLoginToCustomer(b){
+			if (b == true){
+				currentUser = "mariasmith@gmail.com";
+				$("#sign-in-form").remove() ;
+	        	var links = [{action: "PUT", contentType: "application/luc.customers+xml, application/luc.customers+json", rel: "Update customer information.", uri: "/customers"},
+ 					{action: "DELETE", contentType: "none", rel: "Delete customer.", uri: "/customers/mariasmith@gmail.com"},
+					 {action: "GET", contentType: "none", rel: "search products", uri: "/products/"}] ; 
+	        	customerView.initialize(links); 
+	   			
 			}
 		}
 	</script>

@@ -163,7 +163,10 @@ function gimmeGenericForm( link ) {
 function addLinks( links ) {
 	links.forEach( function( link ) {
 		console.log( link.action );
-		if ( link.contentType == "none" ) {
+		if(link.action == "GET"){
+			addGetOrders(link) ; 
+		}	
+		else if ( link.contentType == "none" ) {
 			gimmeGenericForm( link )
 		} else if ( true ) {
 			$( "#product-submit-button" )
@@ -172,6 +175,103 @@ function addLinks( links ) {
 				} );
 		}
 	} );
+};
+
+
+function addGetOrders(link){
+	
+	var html = `
+		<div class='get-orders-container pure-u-4-5 island center '>
+			<h3>Get Customer Orders</h3>
+			<button id = 'get-orders-button' class='pure-button' >Get Orders</button>
+		</div>
+	`;
+	$("main").append(html) ; 
+	$("#get-orders-button").on("click",function(){
+			var accepts = "application/luc.orders+json",
+				verb = "GET",
+				url =  hostName + link.uri + "?key=123456789";
+			$.ajax({
+			accepts: accepts,
+			type: verb,
+			url: url,
+			success: function( data ) {
+				console.log( data );
+				displayOrders(data.Order) ; 
+				
+			},
+			error: function( data, status, err ) {
+				console.log(data) ; 
+				$(".message").remove();
+				$("main").prepend(getFailureMsg(data.responseText)) ; 
+			}
+		}) ;
+	});
+}
+
+function displayOrders(orders){
+	
+	$(".orders").remove() ; 
+	var html = `<ul class=' orders pure-menu-list pure-u-4-5 island center'>
+	<h3>Customer Orders</h3>
+	`;
+	orders.forEach(function (order){
+		html += `<ul  id='order`+ order.orderId +`'class='pure-menu-item'>Order #` + order.orderId +
+			", Status: " + order.status + ", Customer: " + order.customer + `
+
+   			<button name = '`+order.link[0].uri+`' class="pure-button pure-button-inverted order-manip">Fullfill</button>
+    		<button name = '`+order.link[2].uri+`' class="pure-button pure-button-inverted order-manip">Cancel</button>
+    		<button name = '`+order.link[1].uri+`' class="pure-button pure-button-inverted order-manip">Ship</button>
+			
+		</ul>`
+
+		//console.log("#order"+order.orderId + " button") ; 
+	});
+	html += `</ul>`; 
+	$("main").append(html) ;
+	$(".order-manip").on("click",function(){
+		
+			//console.log($(this).attr("name"));
+			manipulateOrder(this) ; 
+		});
+	$(".orders").hide() ;  
+	$(".orders").slideDown() ; 
+
+};
+
+
+function manipulateOrder(buttonEvent){
+	var uri = hostName + $(buttonEvent).attr("name") + "?key=123456789" ; 
+	console.log(uri) ;
+	var buttonType = $(buttonEvent).text() ; 
+	if(buttonType == "Fullfill" || buttonType == "Ship"){
+		sendOrderManipulation(uri,"PUT") ; 
+	}
+	else if(buttonType == "Cancel"){
+		console.log("Deleting........") ; 
+		sendOrderManipulation(uri,"DELETE") ; 
+	}
+
+};
+
+function sendOrderManipulation(uri, verb){
+	
+	$.support.cors = true;
+	$.ajax( {
+		type: verb,
+		url: uri,
+		success: function( data ) {
+			console.log(data) ;
+			$(".message").remove() ;
+			$("main").prepend(getSuccessMsg("Updated Order")); 
+		},
+		error: function( data, status, err ) {
+
+			console.log(data) ; 
+			$(".message").remove() ;
+			$("main").prepend(getFailureMsg("Could not Update order")) ; 
+		}
+	});
 };
 
 function getAddItemForm() {
