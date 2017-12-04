@@ -53,7 +53,7 @@ function setUpUpdateCustomerInfo(link){
 					console.log(data) ;
 					$( "main" )
 						.prepend( getFailureMsg( "Could Not Update" ) ) ;
-						$(".message").fadeOut(8000) ; 
+						$(".message").fadeOut(8000) ;
 				}
 			}
 		});
@@ -90,7 +90,7 @@ function setUpSearchProducts(link){
 	$("main").append(getSearchProductForm());
 	$("#search-item-button").on("click",function(){
 		var searchTerm = $("#item-search").val();
-		var url = hostName + link.uri + searchTerm +"?key=123456789";
+		var url = hostName + link.uri + "/" + searchTerm +"?key=123456789";
 		var verb = "GET";
 		var accepts = "application/luc.products+json";
 		console.log( url );
@@ -227,7 +227,7 @@ function displaySearchResults(data){
 	if(data.Product.length == 0){
 		$("#order-button").remove() ;
 		$("#order-amount").remove() ;
-		$("#get-reviews-button").remove() ; 
+		$("#get-reviews-button").remove() ;
 	}
 	$("#order-button").on("click",function(){
 		var order = {} ;
@@ -243,34 +243,34 @@ function displaySearchResults(data){
 			if(link.action == "POST"){
 				sendOrder(order,link) ;
 			}
-		});	
-		
+		});
+
 	}) ;
 
 	$("#get-reviews-button").on("click",function(){
 		links.forEach(function(link){
 			if(link.action == "GET"){
-				getReviews(link) ; 
+				getReviews(link) ;
 			}
-		});	
+		});
 	});
 };
 
 function displayReviews(reviews){
-	var reviewsArr = reviews.review ; 
+	var reviewsArr = reviews.review ;
 
 	var html = `<div id = "reviews" class='center island pure-u-4-5'><ul class = 'table pure-menu-list pure-u-4-5'>
 				<h3>Product Reviews</h3>` ;
 		reviewsArr.forEach(function(r){
 			html += `<li class = 'pure-menu-item pure-u-23-24'>`
-				+ r.review + `</li>`  ; 
+				+ r.review + `</li>`  ;
 
 		});
 
-				html += `</ul></div>` ; 
-	 ;  
-	$("#reviews").remove(); 
-	$("main").append(html) ; 
+				html += `</ul></div>` ;
+	 ;
+	$("#reviews").remove();
+	$("main").append(html) ;
 	$("#reviews").hide() ;
 	$("#reviews").slideDown() ;
 	$("#reviews").focust();
@@ -280,22 +280,22 @@ function getReviews(link){
 
 	var accepts =  "application/luc.reviews+json",
 		verb = "GET",
-		url = hostName + link.uri + "?key=123456789"; 
+		url = hostName + link.uri + "?key=123456789";
 	 $.ajax( {
 			accepts: accepts,
 			type: verb,
 			url: url,
 			success: function( data ) {
 				console.log(data) ;
-				 
-				displayReviews(data) ; 
+
+				displayReviews(data) ;
 			},
 			error: function( data ) {
 				console.log(data) ;
 				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Get Product Reviews, " + data.responseText ));
-				$(".message").fadeOut(5000) ; 
+				$(".message").fadeOut(5000) ;
 			}
 		});
 };
@@ -326,7 +326,7 @@ function sendOrder(order,link){
 				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Order, " + data.responseText ));
-				$(".message").fadeOut(8000) ; 
+				$(".message").fadeOut(8000) ;
 
 			}
 		});
@@ -379,7 +379,7 @@ function handleOrderBehavior(link){
 				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Get Order Status, " + data.responseText ));
-					$(".message").fadeOut(8000) ; 
+					$(".message").fadeOut(8000) ;
 			}
 		});
 
@@ -404,7 +404,7 @@ function handleOrderBehavior(link){
 				$(".message").remove() ;
 				$( "main" )
 					.prepend( getFailureMsg( "Could not Delete Order, " + data.responseText ));
-					$(".message").fadeOut(8000) ; 
+					$(".message").fadeOut(8000) ;
 			}
 		});
 	}
